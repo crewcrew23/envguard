@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/crewcrew23/envguard/internal/envtypes"
-	"github.com/crewcrew23/envguard/internal/errs"
 	"github.com/crewcrew23/envguard/internal/validators/interfaces"
+	"github.com/crewcrew23/envguard/pkg/errs"
 )
 
 type validator struct {
