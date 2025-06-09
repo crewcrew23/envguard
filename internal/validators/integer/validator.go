@@ -1,6 +1,7 @@
 package integer
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/crewcrew23/envguard/internal/envtypes"
@@ -38,6 +39,26 @@ func (v *validator) Min(min int) interfaces.IntegerValidator {
 func (v *validator) Max(max int) interfaces.IntegerValidator {
 	if v.err == nil && v.value > max {
 		v.err = errs.ErrMaxValue
+	}
+	return v
+}
+
+func (v *validator) Even() interfaces.IntegerValidator {
+	if v.err == nil && v.value%2 != 0 {
+		v.err = errs.ErrNotEven
+	}
+	return v
+}
+func (v *validator) Odd() interfaces.IntegerValidator {
+	if v.err == nil && v.value%2 == 0 {
+		v.err = errs.ErrNotOdd
+	}
+	return v
+}
+
+func (v *validator) Custom(fn func(int) bool) interfaces.IntegerValidator {
+	if v.err == nil && !fn(v.value) {
+		v.err = fmt.Errorf("custom validation failed for value %d", v.value)
 	}
 	return v
 }
