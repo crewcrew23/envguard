@@ -2,6 +2,7 @@ package integer
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 
 	"github.com/crewcrew23/envguard/internal/envtypes"
@@ -52,6 +53,34 @@ func (v *validator) Even() interfaces.IntegerValidator {
 func (v *validator) Odd() interfaces.IntegerValidator {
 	if v.err == nil && v.value%2 == 0 {
 		v.err = errs.ErrNotOdd
+	}
+	return v
+}
+
+func (v *validator) Positive() interfaces.IntegerValidator {
+	if v.err == nil && v.value < 0 {
+		v.err = errs.ErrNotPositive
+	}
+	return v
+}
+
+func (v *validator) Negative() interfaces.IntegerValidator {
+	if v.err == nil && v.value > -1 {
+		v.err = errs.ErrNotNegative
+	}
+	return v
+}
+
+func (v *validator) NonZero() interfaces.IntegerValidator {
+	if v.err == nil && v.value == 0 {
+		v.err = errs.ErrZero
+	}
+	return v
+}
+
+func (v *validator) DivisibleBy(divisor int) interfaces.IntegerValidator {
+	if v.err == nil && v.value%divisor != 0 {
+		v.err = fmt.Errorf("value %d not divide by %d", v.value, divisor)
 	}
 	return v
 }

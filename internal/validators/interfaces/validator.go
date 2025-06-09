@@ -8,8 +8,16 @@ type Validator interface {
 type IntegerValidator interface {
 	Min(min int) IntegerValidator
 	Max(max int) IntegerValidator
+
 	Even() IntegerValidator
 	Odd() IntegerValidator
+
+	Positive() IntegerValidator
+	Negative() IntegerValidator
+	NonZero() IntegerValidator
+
+	DivisibleBy(divisor int) IntegerValidator
+
 	Custom(func(int) bool, string) IntegerValidator
 	Validate() error
 }

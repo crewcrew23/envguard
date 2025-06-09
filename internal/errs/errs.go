@@ -11,6 +11,9 @@ var (
 	ErrNotInteger  = errors.New("value is not an integer")
 	ErrNotEven     = errors.New("value is not a even")
 	ErrNotOdd      = errors.New("value is not a odd")
+	ErrNotPositive = errors.New("value is not positive")
+	ErrNotNegative = errors.New("value is not negative")
+	ErrZero        = errors.New("value is zero")
 
 	ErrStrMin    = errors.New("length is less than minimum")
 	ErrStrMax    = errors.New("length is greater than minimum")
