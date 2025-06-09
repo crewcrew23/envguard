@@ -84,6 +84,20 @@ func (sv *validator) URL() interfaces.StringValidator {
 	return sv
 }
 
+func (sv *validator) Contains(substr string) interfaces.StringValidator {
+	if sv.err == nil && !strings.Contains(sv.value, substr) {
+		sv.err = errs.ErrNotContains
+	}
+	return sv
+}
+
+func (sv *validator) NotContains(forbidden string) interfaces.StringValidator {
+	if sv.err == nil && strings.Contains(sv.value, forbidden) {
+		sv.err = errs.ErrContains
+	}
+	return sv
+}
+
 func (sv *validator) Custom(fn func(string) bool, errmsg string) interfaces.StringValidator {
 	if sv.err == nil && !fn(sv.value) {
 		sv.err = errors.New(errmsg)

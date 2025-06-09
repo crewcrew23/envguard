@@ -26,11 +26,17 @@ type StringValidator interface {
 	Length(min, max int) StringValidator
 	Min(min int) StringValidator
 	Max(max int) StringValidator
+
 	NotEmpty() StringValidator
 	NotBlank() StringValidator
+
 	Email() StringValidator
 	MatchRegex(pattern string) StringValidator
 	URL() StringValidator
+
+	Contains(substr string) StringValidator
+	NotContains(forbidden string) StringValidator
+
 	Custom(func(string) bool, string) StringValidator
 	Validate() error
 }
