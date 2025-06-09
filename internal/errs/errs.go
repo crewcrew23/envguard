@@ -11,4 +11,13 @@ var (
 	ErrNotInteger  = errors.New("value is not an integer")
 	ErrNotEven     = errors.New("value is not a even")
 	ErrNotOdd      = errors.New("value is not a odd")
+
+	ErrStrMin    = errors.New("length is less than minimum")
+	ErrStrMax    = errors.New("length is greater than minimum")
+	ErrStrEmpty  = errors.New("string is empty")
+	ErrStrLength = errors.New("string length is incorrect")
+	ErrStrBlank  = errors.New("string is blank")
+	ErrNotEmail  = errors.New("is not email")
+	ErrRegexp    = errors.New("custom regexp is failed")
+	ErrNotUrl    = errors.New("is not URL")
 )

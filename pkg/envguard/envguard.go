@@ -5,6 +5,7 @@ import (
 	"github.com/crewcrew23/envguard/internal/envtypes"
 	"github.com/crewcrew23/envguard/internal/validators/integer"
 	"github.com/crewcrew23/envguard/internal/validators/interfaces"
+	"github.com/crewcrew23/envguard/internal/validators/str"
 )
 
 type EnvMap struct {
@@ -29,4 +30,8 @@ type validatorAdapter struct {
 
 func (va *validatorAdapter) Integer() interfaces.IntegerValidator {
 	return integer.New(va.value)
+}
+
+func (va *validatorAdapter) String() interfaces.StringValidator {
+	return str.New(va.value)
 }

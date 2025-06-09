@@ -1,7 +1,7 @@
 package integer
 
 import (
-	"fmt"
+	"errors"
 	"strconv"
 
 	"github.com/crewcrew23/envguard/internal/envtypes"
@@ -56,9 +56,9 @@ func (v *validator) Odd() interfaces.IntegerValidator {
 	return v
 }
 
-func (v *validator) Custom(fn func(int) bool) interfaces.IntegerValidator {
+func (v *validator) Custom(fn func(int) bool, errmasg string) interfaces.IntegerValidator {
 	if v.err == nil && !fn(v.value) {
-		v.err = fmt.Errorf("custom validation failed for value %d", v.value)
+		v.err = errors.New(errmasg)
 	}
 	return v
 }

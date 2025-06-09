@@ -2,6 +2,7 @@ package interfaces
 
 type Validator interface {
 	Integer() IntegerValidator
+	String() StringValidator
 }
 
 type IntegerValidator interface {
@@ -9,6 +10,19 @@ type IntegerValidator interface {
 	Max(max int) IntegerValidator
 	Even() IntegerValidator
 	Odd() IntegerValidator
-	Custom(func(int) bool) IntegerValidator
+	Custom(func(int) bool, string) IntegerValidator
+	Validate() error
+}
+
+type StringValidator interface {
+	Length(min, max int) StringValidator
+	Min(min int) StringValidator
+	Max(max int) StringValidator
+	NotEmpty() StringValidator
+	NotBlank() StringValidator
+	Email() StringValidator
+	MatchRegex(pattern string) StringValidator
+	URL() StringValidator
+	Custom(func(string) bool, string) StringValidator
 	Validate() error
 }
