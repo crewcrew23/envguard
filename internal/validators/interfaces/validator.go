@@ -4,7 +4,7 @@ type Validator interface {
 	Integer() IntegerValidator
 	String() StringValidator
 	URL() URLValidator
-	// IP() IPValidator
+	IP() IPValidator
 }
 
 type IntegerValidator interface {
@@ -49,8 +49,8 @@ type URLValidator interface {
 	Validate() error
 }
 
-// type IPValidator interface {
-// 	V4() IPValidator
-// 	V6() IPValidator
-// 	Validate() error
-// }
+type IPValidator interface {
+	V4() IPValidator
+	V6() IPValidator
+	Validate() error
+}

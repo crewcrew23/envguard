@@ -5,6 +5,7 @@ import (
 	"github.com/crewcrew23/envguard/internal/envtypes"
 	"github.com/crewcrew23/envguard/internal/validators/integer"
 	"github.com/crewcrew23/envguard/internal/validators/interfaces"
+	"github.com/crewcrew23/envguard/internal/validators/ip"
 	"github.com/crewcrew23/envguard/internal/validators/str"
 	"github.com/crewcrew23/envguard/internal/validators/url"
 )
@@ -39,4 +40,9 @@ func (va *validatorAdapter) String() interfaces.StringValidator {
 
 func (va *validatorAdapter) URL() interfaces.URLValidator {
 	return url.New(va.value)
+}
+
+func (va *validatorAdapter) IP() interfaces.IPValidator {
+	return ip.New(va.value)
+
 }
