@@ -3,6 +3,8 @@ package interfaces
 type Validator interface {
 	Integer() IntegerValidator
 	String() StringValidator
+	URL() URLValidator
+	// IP() IPValidator
 }
 
 type IntegerValidator interface {
@@ -32,7 +34,6 @@ type StringValidator interface {
 
 	Email() StringValidator
 	MatchRegex(pattern string) StringValidator
-	URL() StringValidator
 
 	Contains(substr string) StringValidator
 	NotContains(forbidden string) StringValidator
@@ -40,3 +41,16 @@ type StringValidator interface {
 	Custom(func(string) bool, string) StringValidator
 	Validate() error
 }
+
+type URLValidator interface {
+	Scheme(schemes ...string) URLValidator
+	Host(hosts ...string) URLValidator
+	Port(ports ...string) URLValidator
+	Validate() error
+}
+
+// type IPValidator interface {
+// 	V4() IPValidator
+// 	V6() IPValidator
+// 	Validate() error
+// }

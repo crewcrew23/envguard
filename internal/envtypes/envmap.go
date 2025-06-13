@@ -1,6 +1,6 @@
 package envtypes
 
-import "github.com/crewcrew23/envguard/internal/errs"
+import "github.com/crewcrew23/envguard/pkg/errs"
 
 type EnvMap struct {
 	values map[string]*EnvValue

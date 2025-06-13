@@ -2,7 +2,6 @@ package str
 
 import (
 	"errors"
-	"net/url"
 	"regexp"
 	"strings"
 
@@ -70,15 +69,6 @@ func (sv *validator) MatchRegex(pattern string) interfaces.StringValidator {
 		regexpPattern := regexp.MustCompile(pattern)
 		if !regexpPattern.MatchString(sv.value) {
 			sv.err = errs.ErrRegexp
-		}
-	}
-	return sv
-}
-func (sv *validator) URL() interfaces.StringValidator {
-	if sv.err == nil {
-		u, err := url.Parse(sv.value)
-		if !(err == nil && u.Scheme != "" && u.Host != "") {
-			sv.err = errs.ErrNotUrl
 		}
 	}
 	return sv

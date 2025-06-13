@@ -6,6 +6,7 @@ import (
 	"github.com/crewcrew23/envguard/internal/validators/integer"
 	"github.com/crewcrew23/envguard/internal/validators/interfaces"
 	"github.com/crewcrew23/envguard/internal/validators/str"
+	"github.com/crewcrew23/envguard/internal/validators/url"
 )
 
 type EnvMap struct {
@@ -34,4 +35,8 @@ func (va *validatorAdapter) Integer() interfaces.IntegerValidator {
 
 func (va *validatorAdapter) String() interfaces.StringValidator {
 	return str.New(va.value)
+}
+
+func (va *validatorAdapter) URL() interfaces.URLValidator {
+	return url.New(va.value)
 }
