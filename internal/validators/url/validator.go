@@ -1,6 +1,7 @@
 package url
 
 import (
+	"errors"
 	"fmt"
 	"net/url"
 	"strings"
@@ -122,6 +123,14 @@ func (v *validator) Port(ports ...string) interfaces.URLValidator {
 	if !found {
 		v.err = fmt.Errorf("invalid port '%s', expected one of: %v",
 			parsedURL.Port(), ports)
+	}
+
+	return v
+}
+
+func (v *validator) Custom(fn func(string) bool, errmsg string) interfaces.URLValidator {
+	if v.err == nil && !fn(v.value) {
+		v.err = errors.New(errmsg)
 	}
 
 	return v

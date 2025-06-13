@@ -46,11 +46,13 @@ type URLValidator interface {
 	Scheme(schemes ...string) URLValidator
 	Host(hosts ...string) URLValidator
 	Port(ports ...string) URLValidator
+	Custom(func(string) bool, string) URLValidator
 	Validate() error
 }
 
 type IPValidator interface {
 	V4() IPValidator
 	V6() IPValidator
+	Custom(func(string) bool, string) IPValidator
 	Validate() error
 }

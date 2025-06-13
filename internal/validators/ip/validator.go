@@ -1,6 +1,7 @@
 package ip
 
 import (
+	"errors"
 	"fmt"
 	"net"
 
@@ -51,6 +52,14 @@ func (v *validator) V6() interfaces.IPValidator {
 
 	if ip.To4() != nil || ip.To16() == nil {
 		v.err = fmt.Errorf("'%s' is not an IPv6 address", v.value)
+	}
+
+	return v
+}
+
+func (v *validator) Custom(fn func(string) bool, errmsg string) interfaces.IPValidator {
+	if v.err == nil && !fn(v.value) {
+		v.err = errors.New(errmsg)
 	}
 
 	return v
