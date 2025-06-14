@@ -2,6 +2,7 @@ package str
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -40,6 +41,32 @@ func (sv *validator) Max(max int) interfaces.StringValidator {
 	if sv.err == nil && len(sv.value) > max {
 		sv.err = errs.ErrStrMax
 	}
+	return sv
+}
+
+func (sv *validator) IsAlpha() interfaces.StringValidator {
+	if sv.err != nil {
+		return sv
+	}
+
+	isAlpha := regexp.MustCompile(`^[A-Za-z]+$`).MatchString
+	if !isAlpha(sv.value) {
+		sv.err = fmt.Errorf("%s is not Alpha", sv.value)
+	}
+
+	return sv
+}
+
+func (sv *validator) IsAlphanumeric() interfaces.StringValidator {
+	if sv.err != nil {
+		return sv
+	}
+
+	isAlphanumeric := regexp.MustCompile(`^[a-zA-Z0-9]*$`).MatchString
+	if !isAlphanumeric(sv.value) {
+		sv.err = fmt.Errorf("%s is not Alphanumeric", sv.value)
+	}
+
 	return sv
 }
 

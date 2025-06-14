@@ -29,6 +29,9 @@ type StringValidator interface {
 	Min(min int) StringValidator
 	Max(max int) StringValidator
 
+	IsAlpha() StringValidator
+	IsAlphanumeric() StringValidator
+
 	NotEmpty() StringValidator
 	NotBlank() StringValidator
 
