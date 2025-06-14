@@ -14,6 +14,9 @@ type IntegerValidator interface {
 	Even() IntegerValidator
 	Odd() IntegerValidator
 
+	Contains(...int) IntegerValidator
+	NotContains(...int) IntegerValidator
+
 	Positive() IntegerValidator
 	Negative() IntegerValidator
 	NonZero() IntegerValidator

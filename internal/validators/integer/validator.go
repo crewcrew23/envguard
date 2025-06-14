@@ -57,6 +57,45 @@ func (v *validator) Odd() interfaces.IntegerValidator {
 	return v
 }
 
+func (v *validator) Contains(alowed ...int) interfaces.IntegerValidator {
+	if v.err != nil {
+		return v
+	}
+
+	find := false
+	for _, i := range alowed {
+		if i == v.value {
+			find = true
+			break
+		}
+	}
+
+	if !find {
+		v.err = fmt.Errorf("%d is not contains", v.value)
+	}
+
+	return v
+}
+func (v *validator) NotContains(disallowed ...int) interfaces.IntegerValidator {
+	if v.err != nil {
+		return v
+	}
+
+	find := false
+	for _, i := range disallowed {
+		if i == v.value {
+			find = true
+			break
+		}
+	}
+
+	if find {
+		v.err = fmt.Errorf("%d is disallowed", v.value)
+	}
+
+	return v
+}
+
 func (v *validator) Positive() interfaces.IntegerValidator {
 	if v.err == nil && v.value < 0 {
 		v.err = errs.ErrNotPositive
