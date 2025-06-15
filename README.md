@@ -48,9 +48,9 @@ func main() {
     }
 
     //Custom validate
-    err := file.Get("CUSTOM_VALUE").Integer().Custom(func(customValue int) bool {
+    err := file.Get("CUSTOM_VALUE").Integer().Custom(func(i int) bool {
 		//other logic
-	})
+	}, "err msg")
 
 }
 ```
