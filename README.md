@@ -70,7 +70,7 @@ func main() {
 - `Contains(...int)`
 - `NotContains(...int)`
 - `DivisibleBy(int)`
-- `Custom(func(int) bool, description string)`
+- `Custom(func(int) bool, errMessage string)`
 
 ---
 
@@ -90,7 +90,7 @@ func main() {
 - `Email()`
 - `UUID()`
 - `MatchRegex(pattern string)`
-- `Custom(func(string) bool, description string)`
+- `Custom(func(string) bool, errMessage string)`
 
 ---
 
@@ -99,7 +99,7 @@ func main() {
 - `Scheme(...string)`
 - `Host(...string)`
 - `Port(...string)`
-- `Custom(func(string) bool, description string)`
+- `Custom(func(string) bool, errMessage string)`
 
 ---
 
@@ -107,4 +107,4 @@ func main() {
 
 - `V4()`
 - `V6()`
-- `Custom(func(string) bool, description string)`
+- `Custom(func(string) bool, errMessage string)`
