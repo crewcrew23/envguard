@@ -46,39 +46,65 @@ func main() {
     if err != nil {
         fmt.Println("Error IP:", err)
     }
+
+    //Custom validate
+    err := file.Get("CUSTOM_VALUE").Integer().Custom(func(customValue int) bool {
+		//other logic
+	})
+
 }
 ```
 
-## ✅ Supported validators
-### Integer
+## ✅ Supported Validators
 
-Min(int)
-Max(int)
-Between(min, max int)
-Even()
-Odd()
-Positive(), Negative(), NonZero()
-Contains(...int), NotContains(...int)
-DivisibleBy(int)
-Custom(func(int) bool, string)
+---
 
-### Integer
+### 🔢 Integer
 
-Min(int), Max(int), Length(min, max)
-NotEmpty(), NotBlank()
-IsAlpha(), IsAlphanumeric()
-HasPrefix(string), HasSuffix(string)
-Contains(string), NotContains(string)
-Email(), UUID()
-MatchRegex(pattern)
-Custom(func(string) bool, string)
+- `Min(int)`
+- `Max(int)`
+- `Between(min, max int)`
+- `Even()`
+- `Odd()`
+- `Positive()`, `Negative()`, `NonZero()`
+- `Contains(...int)`
+- `NotContains(...int)`
+- `DivisibleBy(int)`
+- `Custom(func(int) bool, description string)`
 
-### Url
+---
 
-Scheme(...), Host(...), Port(...)
-Custom(func(string) bool, string)
+### 🔤 String
 
-## Ip
-V4()
-V6()
-Custom(func(string) bool, string)
+- `Min(int)`
+- `Max(int)`
+- `Length(min, max int)`
+- `NotEmpty()`
+- `NotBlank()`
+- `IsAlpha()`
+- `IsAlphanumeric()`
+- `HasPrefix(string)`
+- `HasSuffix(string)`
+- `Contains(string)`
+- `NotContains(string)`
+- `Email()`
+- `UUID()`
+- `MatchRegex(pattern string)`
+- `Custom(func(string) bool, description string)`
+
+---
+
+### 🌐 URL
+
+- `Scheme(...string)`
+- `Host(...string)`
+- `Port(...string)`
+- `Custom(func(string) bool, description string)`
+
+---
+
+### 🌍 IP
+
+- `V4()`
+- `V6()`
+- `Custom(func(string) bool, description string)`
