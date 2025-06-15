@@ -23,107 +23,136 @@ func New(provide envtypes.ValueProvider) interfaces.StringValidator {
 	return &validator{value: provide.Value()}
 }
 
-func (sv *validator) Length(min, max int) interfaces.StringValidator {
-	if sv.err == nil && (len(sv.value) < min || len(sv.value) > max) {
-		sv.err = errs.ErrStrLength
+func (v *validator) Length(min, max int) interfaces.StringValidator {
+	if v.err == nil && (len(v.value) < min || len(v.value) > max) {
+		v.err = errs.ErrStrLength
 	}
-	return sv
+	return v
 }
 
-func (sv *validator) Min(min int) interfaces.StringValidator {
-	if sv.err == nil && len(sv.value) < min {
-		sv.err = errs.ErrStrMin
+func (v *validator) Min(min int) interfaces.StringValidator {
+	if v.err == nil && len(v.value) < min {
+		v.err = errs.ErrStrMin
 	}
-	return sv
+	return v
 }
 
-func (sv *validator) Max(max int) interfaces.StringValidator {
-	if sv.err == nil && len(sv.value) > max {
-		sv.err = errs.ErrStrMax
+func (v *validator) Max(max int) interfaces.StringValidator {
+	if v.err == nil && len(v.value) > max {
+		v.err = errs.ErrStrMax
 	}
-	return sv
+	return v
 }
 
-func (sv *validator) IsAlpha() interfaces.StringValidator {
-	if sv.err != nil {
-		return sv
+func (v *validator) IsAlpha() interfaces.StringValidator {
+	if v.err != nil {
+		return v
 	}
 
 	isAlpha := regexp.MustCompile(`^[A-Za-z]+$`).MatchString
-	if !isAlpha(sv.value) {
-		sv.err = fmt.Errorf("%s is not Alpha", sv.value)
+	if !isAlpha(v.value) {
+		v.err = fmt.Errorf("%s is not Alpha", v.value)
 	}
 
-	return sv
+	return v
 }
 
-func (sv *validator) IsAlphanumeric() interfaces.StringValidator {
-	if sv.err != nil {
-		return sv
+func (v *validator) IsAlphanumeric() interfaces.StringValidator {
+	if v.err != nil {
+		return v
 	}
 
 	isAlphanumeric := regexp.MustCompile(`^[a-zA-Z0-9]*$`).MatchString
-	if !isAlphanumeric(sv.value) {
-		sv.err = fmt.Errorf("%s is not Alphanumeric", sv.value)
+	if !isAlphanumeric(v.value) {
+		v.err = fmt.Errorf("%s is not Alphanumeric", v.value)
 	}
 
-	return sv
+	return v
 }
 
-func (sv *validator) NotEmpty() interfaces.StringValidator {
-	if sv.err == nil && len(sv.value) == 0 {
-		sv.err = errs.ErrStrEmpty
+func (v *validator) NotEmpty() interfaces.StringValidator {
+	if v.err == nil && len(v.value) == 0 {
+		v.err = errs.ErrStrEmpty
 	}
-	return sv
+	return v
 }
 
-func (sv *validator) NotBlank() interfaces.StringValidator {
-	if sv.err == nil && strings.TrimSpace(sv.value) == "" {
-		sv.err = errs.ErrStrBlank
+func (v *validator) NotBlank() interfaces.StringValidator {
+	if v.err == nil && strings.TrimSpace(v.value) == "" {
+		v.err = errs.ErrStrBlank
 	}
-	return sv
+	return v
 }
 
-func (sv *validator) Email() interfaces.StringValidator {
-	if sv.err == nil && isEmailValid(sv.value) {
-		sv.err = errs.ErrNotEmail
+func (v *validator) HasPrefix(prefix string) interfaces.StringValidator {
+	if v.err == nil && !strings.HasPrefix(v.value, prefix) {
+		v.err = fmt.Errorf("%s doesnt has prefix %s", v.value, prefix)
 	}
-	return sv
+
+	return v
 }
 
-func (sv *validator) MatchRegex(pattern string) interfaces.StringValidator {
-	if sv.err == nil {
+func (v *validator) HasSuffix(suffix string) interfaces.StringValidator {
+	if v.err == nil && !strings.HasSuffix(v.value, suffix) {
+		v.err = fmt.Errorf("%s doesnt has suffix %s", v.value, suffix)
+	}
+
+	return v
+}
+
+func (v *validator) Email() interfaces.StringValidator {
+	if v.err == nil && isEmailValid(v.value) {
+		v.err = errs.ErrNotEmail
+	}
+	return v
+}
+
+func (v *validator) UUID() interfaces.StringValidator {
+	if v.err != nil {
+		return v
+	}
+
+	r := regexp.MustCompile("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[8|9|aA|bB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$")
+	if !r.MatchString(v.value) {
+		v.err = fmt.Errorf("%s is not UUID", v.value)
+	}
+
+	return v
+}
+
+func (v *validator) MatchRegex(pattern string) interfaces.StringValidator {
+	if v.err == nil {
 		regexpPattern := regexp.MustCompile(pattern)
-		if !regexpPattern.MatchString(sv.value) {
-			sv.err = errs.ErrRegexp
+		if !regexpPattern.MatchString(v.value) {
+			v.err = errs.ErrRegexp
 		}
 	}
-	return sv
+	return v
 }
 
-func (sv *validator) Contains(substr string) interfaces.StringValidator {
-	if sv.err == nil && !strings.Contains(sv.value, substr) {
-		sv.err = errs.ErrNotContains
+func (v *validator) Contains(substr string) interfaces.StringValidator {
+	if v.err == nil && !strings.Contains(v.value, substr) {
+		v.err = errs.ErrNotContains
 	}
-	return sv
+	return v
 }
 
-func (sv *validator) NotContains(forbidden string) interfaces.StringValidator {
-	if sv.err == nil && strings.Contains(sv.value, forbidden) {
-		sv.err = errs.ErrContains
+func (v *validator) NotContains(forbidden string) interfaces.StringValidator {
+	if v.err == nil && strings.Contains(v.value, forbidden) {
+		v.err = errs.ErrContains
 	}
-	return sv
+	return v
 }
 
-func (sv *validator) Custom(fn func(string) bool, errmsg string) interfaces.StringValidator {
-	if sv.err == nil && !fn(sv.value) {
-		sv.err = errors.New(errmsg)
+func (v *validator) Custom(fn func(string) bool, errmsg string) interfaces.StringValidator {
+	if v.err == nil && !fn(v.value) {
+		v.err = errors.New(errmsg)
 	}
-	return sv
+	return v
 }
 
-func (sv *validator) Validate() error {
-	return sv.err
+func (v *validator) Validate() error {
+	return v.err
 }
 
 func isEmailValid(e string) bool {

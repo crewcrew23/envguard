@@ -44,6 +44,22 @@ func (v *validator) Max(max int) interfaces.IntegerValidator {
 	return v
 }
 
+func (v *validator) Between(min, max int) interfaces.IntegerValidator {
+	if v.err != nil {
+		return v
+	}
+
+	if v.value < min {
+		v.err = fmt.Errorf("%d is less than min", v.value)
+	}
+
+	if v.value > max {
+		v.err = fmt.Errorf("%d is greater than max", v.value)
+	}
+
+	return v
+}
+
 func (v *validator) Even() interfaces.IntegerValidator {
 	if v.err == nil && v.value%2 != 0 {
 		v.err = errs.ErrNotEven

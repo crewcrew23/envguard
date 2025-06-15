@@ -8,8 +8,9 @@ type Validator interface {
 }
 
 type IntegerValidator interface {
-	Min(min int) IntegerValidator
-	Max(max int) IntegerValidator
+	Min(int) IntegerValidator
+	Max(int) IntegerValidator
+	Between(int, int) IntegerValidator
 
 	Even() IntegerValidator
 	Odd() IntegerValidator
@@ -38,7 +39,11 @@ type StringValidator interface {
 	NotEmpty() StringValidator
 	NotBlank() StringValidator
 
+	HasPrefix(string) StringValidator
+	HasSuffix(string) StringValidator
+
 	Email() StringValidator
+	UUID() StringValidator
 	MatchRegex(pattern string) StringValidator
 
 	Contains(substr string) StringValidator
