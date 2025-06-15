@@ -11,7 +11,7 @@
 ## 🔧 Installation
 
 ```bash
-go get github.com/yourusername/envguard
+go get github.com/crewcrew23/envguard
 ```
 
 ## 🚀 Quick start
