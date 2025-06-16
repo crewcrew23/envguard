@@ -44,7 +44,7 @@ type StringValidator interface {
 
 	Email() StringValidator
 	UUID() StringValidator
-	MatchRegex(pattern string) StringValidator
+	MatchRegexp(pattern string) StringValidator
 
 	Contains(substr string) StringValidator
 	NotContains(forbidden string) StringValidator

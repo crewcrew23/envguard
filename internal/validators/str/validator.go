@@ -101,7 +101,7 @@ func (v *validator) HasSuffix(suffix string) interfaces.StringValidator {
 }
 
 func (v *validator) Email() interfaces.StringValidator {
-	if v.err == nil && isEmailValid(v.value) {
+	if v.err == nil && !isEmailValid(v.value) {
 		v.err = errs.ErrNotEmail
 	}
 	return v
@@ -120,7 +120,7 @@ func (v *validator) UUID() interfaces.StringValidator {
 	return v
 }
 
-func (v *validator) MatchRegex(pattern string) interfaces.StringValidator {
+func (v *validator) MatchRegexp(pattern string) interfaces.StringValidator {
 	if v.err == nil {
 		regexpPattern := regexp.MustCompile(pattern)
 		if !regexpPattern.MatchString(v.value) {
