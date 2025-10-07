@@ -3,7 +3,7 @@
 `envguard` — This is a simple, readable and flexible library for inspecting `.env` files in Go.
 
 📌 Supports validation `int`, `string`, `URL`, `IP`  
-✅ Strict rules: `Min`, `Max`, `Regex`, `UUID`, `Email`, `IP v4/v6` и др.  
+✅ Strict rules: `Min`, `Max`, `Regex`, `UUID`, `Email`, `IP v4/v6` etc.  
 💡 Convenient API: readable call chain
 
 ---
